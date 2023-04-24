@@ -1,0 +1,21 @@
+body {
+    font-family: Verdana, sans-serif;
+    padding: 20px;
+}
+
+form {
+    margin-bottom: 15px;
+}
+
+#error {
+    margin-bottom: 15px;
+    color: red;
+}
+
+#save-status {
+    margin-bottom: 15px;
+}
+
+#resource {
+    width: 350px;
+}

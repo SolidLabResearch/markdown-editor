@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown editor</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+</head>
+<body>
+
+<form>
+  <label for="resource">Resource:</label>
+  <input id="resource" placeholder="url" type="url" required>
+  <input id="load-button" type="button" value="Load">
+</form>
+<div id="error"></div>
+<div id="save-status"></div>
+<textarea id="editor"></textarea>
+
+<script src="script.js" type="application/javascript"></script>
+</body>
+</html>
