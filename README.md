@@ -9,3 +9,6 @@ This works great with Solid and the Solid Authentication browser extension.
 2. Start server via `npm start`.
 3. Browse to <http://localhost:8080>.
 
+## Editor
+
+We use [EasyMDE](https://github.com/Ionaru/easy-markdown-editor) as Markdown editor.
