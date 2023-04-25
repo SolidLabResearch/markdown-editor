@@ -19,3 +19,12 @@ form {
 #resource {
     width: 350px;
 }
+
+#webid-container {
+    margin-bottom: 15px;
+}
+
+.hidden {
+    visibility: hidden;
+    display: none;
+}

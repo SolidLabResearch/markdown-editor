@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<div id="webid-container" class="hidden">Logged in as <span id="webid"></span></div>
 <form>
   <label for="resource">Resource:</label>
   <input id="resource" placeholder="url" type="url" required>
@@ -17,7 +18,7 @@
 </form>
 <div id="error"></div>
 <div id="save-status"></div>
-<textarea id="editor"></textarea>
+<textarea id="editor" class="hidden"></textarea>
 
 <script src="script.js" type="application/javascript"></script>
 </body>

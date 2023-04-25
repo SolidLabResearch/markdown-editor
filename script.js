@@ -5,11 +5,31 @@ let currentSaveTimeout = null;
 let initialLoad = false;
 
 window.onload = () => {
+  document.getElementById('load-button')
+    .addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = document.getElementById('resource').value;
+    loadMarkdownFromResource(url);
+  });
+
+  document.getElementById('resource')
+    .addEventListener('keypress', event => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("load-button").click();
+      }
+    });
+
+  connectWithSolidExtension();
+};
+
+function loadEditor() {
   easyMDE = new EasyMDE({
     renderingConfig: {
       singleLineBreaks: false
     },
-    spellChecker: false
+    spellChecker: false,
+    sideBySideFullscreen: false
   });
   easyMDE.codemirror.on("change", () => {
     if (initialLoad) {
@@ -38,24 +58,13 @@ window.onload = () => {
       document.getElementById('save-status').innerText = 'Saved.';
     }, WAIT_BEFORE_SAVING);
   });
-
-  document.getElementById('load-button')
-    .addEventListener('click', (e) => {
-      e.preventDefault();
-      const url = document.getElementById('resource').value;
-    loadMarkdownFromResource(url);
-  });
-
-  document.getElementById('resource')
-    .addEventListener('keypress', event => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        document.getElementById("load-button").click();
-      }
-    });
-};
+}
 
 async function loadMarkdownFromResource(url) {
+  if (!url) {
+    throw new Error('No url was provided.');
+  }
+
   console.log('Loading', url);
   const response = await fetch(url, {
     headers: {
@@ -67,18 +76,28 @@ async function loadMarkdownFromResource(url) {
   if (response.ok) {
     const markdown = await response.text();
     initialLoad = true;
+    if (!easyMDE) {
+      loadEditor();
+    }
     easyMDE.value(markdown);
   } else if (response.status === 404) {
-    document.getElementById('save-status').innerText =
-      `This resource doesn't exist yet. We will create it once you start writing.`;
+    if (!easyMDE) {
+      loadEditor();
+    }
     initialLoad = true;
     easyMDE.value('');
+    document.getElementById('save-status').innerText =
+      `This resource doesn't exist yet. We will create it once you start writing.`;
   } else {
     console.log(await response.text());
   }
 }
 
 async function storeMarkdownToResource(url, markdown) {
+  if (!url) {
+    throw new Error('No url was provided.');
+  }
+
   console.log('Saving to', url);
   const response = await fetch(url, {
     method: 'PUT',
@@ -89,4 +108,32 @@ async function storeMarkdownToResource(url, markdown) {
   });
 
   return response.ok;
+}
+
+function connectWithSolidExtension() {
+  if (!window.solid) {
+    console.log('Solid Authentication extension not detected.');
+    return;
+  }
+
+  window.solid.onStatusChange(status => {
+    status = JSON.parse(status);
+    showWebID(status.webId);
+  });
+
+  window.solid.getStatus(status => {
+    status = JSON.parse(status);
+    showWebID(status.webId);
+  });
+}
+
+function showWebID(webId) {
+  const $webIdContainer = document.getElementById('webid-container');
+  const $webId = document.getElementById('webid');
+  if (webId) {
+    $webIdContainer.classList.remove('hidden');
+    $webId.innerText = webId;
+  } else {
+    $webIdContainer.classList.add('hidden');
+  }
 }
