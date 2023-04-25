@@ -20,7 +20,13 @@ window.onload = () => {
       }
     });
 
+  document.getElementById('clear-recent-items-button')
+    .addEventListener('click', (e) => {
+      clearRecentItems();
+    });
+
   connectWithSolidExtension();
+  loadRecentItems();
 };
 
 function loadEditor() {
@@ -80,6 +86,7 @@ async function loadMarkdownFromResource(url) {
       loadEditor();
     }
     easyMDE.value(markdown);
+    addRecentItem(url);
   } else if (response.status === 404) {
     if (!easyMDE) {
       loadEditor();
@@ -88,6 +95,7 @@ async function loadMarkdownFromResource(url) {
     easyMDE.value('');
     document.getElementById('save-status').innerText =
       `This resource doesn't exist yet. We will create it once you start writing.`;
+    addRecentItem(url);
   } else {
     console.log(await response.text());
   }
@@ -136,4 +144,61 @@ function showWebID(webId) {
   } else {
     $webIdContainer.classList.add('hidden');
   }
+}
+
+function loadRecentItems() {
+  let recentItems = window.localStorage.getItem('recentItems');
+
+  if (recentItems) {
+    recentItems = JSON.parse(recentItems);
+  } else {
+    recentItems = [];
+  }
+
+  recentItems.reverse();
+
+  let list = `<ul>`;
+
+  recentItems.forEach(item => {
+    list += `<li>${item}</li>`;
+  });
+
+  list += '</ul>';
+
+  document.getElementById('recent-items-list').innerHTML = list;
+  let links = document.querySelectorAll('#recent-items-list li');
+  links = Array.from(links);
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      const url = link.innerText;
+      console.log(url);
+      document.getElementById('resource').value = url;
+      loadMarkdownFromResource(url);
+    })
+  });
+}
+
+function addRecentItem(item) {
+  let recentItems = window.localStorage.getItem('recentItems');
+
+  if (recentItems) {
+    recentItems = JSON.parse(recentItems);
+  } else {
+    recentItems = [];
+  }
+
+  const index = recentItems.indexOf(item);
+
+  if (index !== -1) {
+    recentItems.splice(index, 1);
+  }
+
+  recentItems.push(item);
+  window.localStorage.setItem('recentItems', JSON.stringify(recentItems));
+}
+
+function clearRecentItems() {
+  window.localStorage.setItem('recentItems', JSON.stringify([]));
+  loadRecentItems();
 }

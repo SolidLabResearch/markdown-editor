@@ -28,3 +28,7 @@ form {
     visibility: hidden;
     display: none;
 }
+
+#recent-items-list li:hover {
+    cursor: pointer;
+}
