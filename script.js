@@ -58,7 +58,7 @@ function loadEditor() {
       if (responseStatus) {
         document.getElementById('error').innerText = '';
       } else {
-        document.getElementById('error').innerText = 'Failed to save markdown to resource.';
+        document.getElementById('error').innerText = 'Failed to save Markdown to resource.';
       }
       currentSaveTimeout = null;
       document.getElementById('save-status').innerText = 'Saved.';
@@ -70,6 +70,8 @@ async function loadMarkdownFromResource(url) {
   if (!url) {
     throw new Error('No url was provided.');
   }
+
+  document.getElementById('error').innerText = ``;
 
   console.log('Loading', url);
   const response = await fetch(url, {
@@ -97,6 +99,7 @@ async function loadMarkdownFromResource(url) {
       `This resource doesn't exist yet. We will create it once you start writing.`;
     addRecentItem(url);
   } else {
+    document.getElementById('error').innerText = `Failed to load Markdown from resource (HTTP status: ${response.status}).`;
     console.log(await response.text());
   }
 }
