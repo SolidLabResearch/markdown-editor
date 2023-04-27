@@ -124,20 +124,29 @@ async function storeMarkdownToResource(url, markdown) {
 }
 
 function connectWithSolidExtension() {
-  if (!window.solid) {
-    console.log('Solid Authentication extension not detected.');
-    return;
-  }
+  let counter = 1;
+  const timeoutID = setTimeout(() => {
+    if (counter >= 15) {
+      clearInterval(timeoutID);
+    }
 
-  window.solid.onStatusChange(status => {
-    status = JSON.parse(status);
-    showWebID(status.webId);
-  });
+    counter ++;
 
-  window.solid.getStatus(status => {
-    status = JSON.parse(status);
-    showWebID(status.webId);
-  });
+    if (!window.solid) {
+      console.log('Solid Authentication extension not detected.');
+      return;
+    }
+
+    window.solid.onStatusChange(status => {
+      status = JSON.parse(status);
+      showWebID(status.webId);
+    });
+
+    window.solid.getStatus(status => {
+      status = JSON.parse(status);
+      showWebID(status.webId);
+    });
+  }, 1000);
 }
 
 function showWebID(webId) {
