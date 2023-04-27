@@ -3,6 +3,13 @@
 This is a Markdown editor that allows users to load and store Markdown files via GET and PUT requests.
 This works great with Solid and the Solid Authentication browser extension.
 
+## Features
+- Load Markdown files via GET requests.
+- Store Markdown files via PUT requests.
+- Show WebID of user if user has logged in with the Solid Authentication browser extension.
+- WebID and browser extension are not needed when working with public resources.
+- Show most recent files. They are stored in the browser storage.
+
 ## Usage
 
 1. Install dependencies via `npm i`.
