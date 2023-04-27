@@ -142,12 +142,15 @@ function connectWithSolidExtension() {
 
 function showWebID(webId) {
   const $webIdContainer = document.getElementById('webid-container');
+  const $notLoggedIn = document.getElementById('webid-not-logged-in');
   const $webId = document.getElementById('webid');
   if (webId) {
     $webIdContainer.classList.remove('hidden');
+    $notLoggedIn.classList.add('hidden');
     $webId.innerText = webId;
   } else {
     $webIdContainer.classList.add('hidden');
+    $notLoggedIn.classList.remove('hidden');
   }
 }
 
@@ -161,17 +164,21 @@ function loadRecentItems() {
   }
 
   if (recentItems.length === 0) {
-    document.getElementById('recent-items-container').classList.add('hidden');
+    document.getElementById('recent-items-list').classList.add('hidden');
+    document.getElementById('clear-recent-items-button').classList.add('hidden');
+    document.getElementById('recent-items-empty').classList.remove('hidden');
     return;
   }
 
-  document.getElementById('recent-items-container').classList.remove('hidden');
+  document.getElementById('recent-items-list').classList.remove('hidden');
+  document.getElementById('clear-recent-items-button').classList.remove('hidden');
+  document.getElementById('recent-items-empty').classList.add('hidden');
   recentItems.reverse();
 
   let list = `<ul>`;
 
-  recentItems.forEach(item => {
-    list += `<li>${item}</li>`;
+  recentItems.forEach((item, index) => {
+    list += `<li class="list-group-item">${item}</li>`;
   });
 
   list += '</ul>';
@@ -186,6 +193,7 @@ function loadRecentItems() {
       console.log(url);
       document.getElementById('resource').value = url;
       loadMarkdownFromResource(url);
+      document.getElementById('close-menu-button').click();
     })
   });
 }

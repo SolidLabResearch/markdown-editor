@@ -20,10 +20,6 @@ form {
     width: 750px;
 }
 
-#webid-container {
-    margin-bottom: 15px;
-}
-
 .hidden {
     visibility: hidden;
     display: none;
@@ -31,4 +27,25 @@ form {
 
 #recent-items-list li:hover {
     cursor: pointer;
+}
+
+#menu-button, #load-button, #clear-recent-items-button {
+    background-color: #eab676;
+    border-color: #eab676;
+}
+
+form {
+    margin-top: 20px;
+}
+
+#clear-recent-items-button {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    font-size: 14px !important;
+}
+
+#recent-items-list {
+    margin-left: -15px;
 }
