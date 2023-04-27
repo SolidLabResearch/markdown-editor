@@ -124,6 +124,11 @@ async function storeMarkdownToResource(url, markdown) {
 }
 
 function connectWithSolidExtension() {
+  // We try to connect to the extension.
+  // Once we are connected we stop trying.
+  // We try at most 15 times.
+  // As far as I know there is no way to detect when the content script of the extension in injected and
+  // finished running.
   let counter = 1;
   const timeoutID = setTimeout(() => {
     if (counter >= 15) {
@@ -146,6 +151,8 @@ function connectWithSolidExtension() {
       status = JSON.parse(status);
       showWebID(status.webId);
     });
+
+    clearInterval(timeoutID);
   }, 1000);
 }
 
