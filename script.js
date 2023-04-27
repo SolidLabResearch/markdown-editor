@@ -89,6 +89,7 @@ async function loadMarkdownFromResource(url) {
     }
     easyMDE.value(markdown);
     addRecentItem(url);
+    loadRecentItems();
   } else if (response.status === 404) {
     if (!easyMDE) {
       loadEditor();
@@ -98,6 +99,7 @@ async function loadMarkdownFromResource(url) {
     document.getElementById('save-status').innerText =
       `This resource doesn't exist yet. We will create it once you start writing.`;
     addRecentItem(url);
+    loadRecentItems();
   } else {
     document.getElementById('error').innerText = `Failed to load Markdown from resource (HTTP status: ${response.status}).`;
     console.log(await response.text());
@@ -158,6 +160,12 @@ function loadRecentItems() {
     recentItems = [];
   }
 
+  if (recentItems.length === 0) {
+    document.getElementById('recent-items-container').classList.add('hidden');
+    return;
+  }
+
+  document.getElementById('recent-items-container').classList.remove('hidden');
   recentItems.reverse();
 
   let list = `<ul>`;
