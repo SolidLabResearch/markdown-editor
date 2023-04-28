@@ -49,3 +49,27 @@ form {
 #recent-items-list {
     margin-left: -15px;
 }
+
+.editor-preview-side h1 {
+    font-size: 2em;
+}
+
+.editor-preview-side h2 {
+    font-size: 1.5em;
+}
+
+.editor-preview-side h3 {
+    font-size: 1.25em;
+}
+
+.editor-preview-side h4 {
+    font-size: 1em;
+}
+
+.editor-preview-side h5 {
+    font-size: 0.875em;
+}
+
+.editor-preview-side h6 {
+    font-size: 0.85em;
+}

@@ -35,7 +35,8 @@ function loadEditor() {
       singleLineBreaks: false
     },
     spellChecker: false,
-    sideBySideFullscreen: false
+    sideBySideFullscreen: false,
+    theme: 'material'
   });
   easyMDE.codemirror.on("change", () => {
     if (initialLoad) {
@@ -127,8 +128,8 @@ function connectWithSolidExtension() {
   // We try to connect to the extension.
   // Once we are connected we stop trying.
   // We try at most 15 times.
-  // As far as I know there is no way to detect when the content script of the extension in injected and
-  // finished running.
+  // As far as I know there is no way to detect when the content script of the extension is injected and
+  // has finished running.
   let counter = 1;
   const timeoutID = setTimeout(() => {
     if (counter >= 15) {
