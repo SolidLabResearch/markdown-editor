@@ -1,16 +1,17 @@
 let easyMDE;
 let latestStoredMarkdown;
-const WAIT_BEFORE_SAVING = 3*1000; // 3 seconds.
+const WAIT_BEFORE_SAVING = 3 * 1000; // 3 seconds.
 let currentSaveTimeout = null;
 let initialLoad = false;
 
 window.onload = () => {
   document.getElementById('load-button')
     .addEventListener('click', (e) => {
+      document.getElementById('save-status').innerText = 'Loading Markdown...';
       e.preventDefault();
       const url = document.getElementById('resource').value;
-    loadMarkdownFromResource(url);
-  });
+      loadMarkdownFromResource(url);
+    });
 
   document.getElementById('resource')
     .addEventListener('keypress', event => {
@@ -102,6 +103,7 @@ async function loadMarkdownFromResource(url) {
     addRecentItem(url);
     loadRecentItems();
   } else {
+    document.getElementById('save-status').innerText = '';
     document.getElementById('error').innerText = `Failed to load Markdown from resource (HTTP status: ${response.status}).`;
     console.log(await response.text());
   }
@@ -136,7 +138,7 @@ function connectWithSolidExtension() {
       clearInterval(timeoutID);
     }
 
-    counter ++;
+    counter++;
 
     if (!window.solid) {
       console.log('Solid Authentication extension not detected.');
