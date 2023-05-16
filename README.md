@@ -17,6 +17,10 @@ the [Solid Authentication browser extension](https://github.com/KNowledgeOnWebSc
 2. Start server via `npm start`.
 3. Browse to <http://localhost:8080>.
 
+## Sequence diagram
+
+You find a sequence diagram of how the app works with the browser extension [here](./sequence-diagram.png).
+
 ## Editor
 
 We use [EasyMDE](https://github.com/Ionaru/easy-markdown-editor) as Markdown editor.

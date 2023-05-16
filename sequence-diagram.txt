@@ -1,0 +1,33 @@
+sequenceDiagram
+    actor user as Writer
+    participant app as Markdown editor
+    participant browser as Browser
+    participant extension as Solid Authentication browser extension
+    participant pod as Pod
+
+    user ->> browser: Browse to "Markdown editor" app
+    browser ->> app: Open app
+    user ->> app: Load Markdown resource at /my-file
+    app ->> browser: GET Markdown resource at /my-file
+    browser ->> extension: Extension intercepts GET /my-file
+    extension ->> pod: HEAD /my-file
+    alt /my-file is public
+        pod -->> extension: HTTP 200
+        Note over extension: No authentication headers needed
+        extension -->> browser: Original headers from GET /my-file
+    else /my-file is private
+        pod -->> extension: HTTP 401
+        extension ->> extension: Generate authentication headers
+        extension -->> browser: Original and authentication headers
+    end
+    browser ->> pod: GET /my-file (including authentication headers)
+    pod -->> browser: Markdown file
+    browser -->> app: Markdown file
+    app ->> app: Show Markdown file
+    user ->> app: Make changes to Markdown
+    app ->> browser: PUT Markdown resource at /my-file
+    browser ->> extension: Extension intercepts PUT /my-file
+    Note over extension: Not possible to determine if authentication headers are required for PUT
+    extension ->> extension: Generate authentication headers
+    extension -->> browser: Original and authentication headers
+    browser ->> pod: PUT /my-file (including authentication headers)
