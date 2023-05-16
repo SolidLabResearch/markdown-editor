@@ -8,7 +8,7 @@ This works great with Solid and the Solid Authentication browser extension.
 - Store Markdown files via PUT requests.
 - Show WebID of user if user has logged in with the Solid Authentication browser extension.
 - WebID and browser extension are not needed when working with public resources.
-- Show most recent files. They are stored in the browser storage.
+- Show urls of most recent files. The urls are stored in the browser storage.
 
 ## Usage
 
