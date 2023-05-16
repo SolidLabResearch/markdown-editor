@@ -1,7 +1,8 @@
 # Markdown editor with GET/PUT support
 
 This is a Markdown editor that allows users to load and store Markdown files via GET and PUT requests.
-This works great with Solid and the Solid Authentication browser extension.
+This works great with Solid and 
+the [Solid Authentication browser extension](https://github.com/KNowledgeOnWebScale/solid-authentication-browser-extension/).
 
 ## Features
 - Load Markdown files via GET requests.
