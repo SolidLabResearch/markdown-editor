@@ -17,6 +17,10 @@ the [Solid Authentication browser extension](https://github.com/KNowledgeOnWebSc
 2. Start server via `npm start`.
 3. Browse to <http://localhost:8080>.
 
+## Screencast
+
+You can watch a screencast of the editor [here](https://cloud.ilabt.imec.be/index.php/s/JcqFbRzNMFztC8D).
+
 ## Sequence diagram
 
 You find a sequence diagram of how the app works with the browser extension [here](./sequence-diagram.png).
